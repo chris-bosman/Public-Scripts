@@ -15,38 +15,9 @@ If ($RegCheck -eq $false)
 choco install powershell -y
 choco upgrade powershell -y
 
-# Latest NuGet provider
-If ((Get-PackageProvider | Select-Object Name) -match "NuGet")
-    {
-        Write-Host "NuGet installed, continuing..."   
-    }
-Else
-    {
-        Install-Module PackageManagement -Force
-        Install-PackageProvider Nuget -Force
-    }
-
-# PowershellGet
-If ((Get-InstalledModule | Select-Object Name) -match "PowershellGet")
-    {
-        Write-Host "PowershellGet installed, continuing..."
-    }
-else
-    {
-        Install-Module -Name PowershellGet -Force
-    }
-
-# PSWindowsUpdate
-If ((Get-Module | Select-Object Name) -match "PSWindowsUpdate")
-    {
-        Write-Host "PSWIndowsUpdate installed, continuing..."
-    }
-else 
-    {
-        Install-Module PSWindowsUpdate -Force -Scope AllUsers
-    }
-
 # Load PSWindowsUpdate
+Install-Module -Name PowershellGet -Force
+Install-Module PSWindowsUpdate -Force -Scope AllUsers
 Import-Module PSWindowsUpdate
 
 ### Add Windows Update Service Manager ID
