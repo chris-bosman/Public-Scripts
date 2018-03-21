@@ -1,7 +1,48 @@
-# Check for and install Get-WUInstall Prerequisites
+### Check for and install Get-WUInstall Prerequisites
+# Check .NET version and install 4.5 if not present
+$RegCheck = Get-ChildItem "HKLM:SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\" | Get-ItemPropertyValue -Name Release | ForEach-Object { $_ -ge 394802 }
+If ($RegCheck -eq $false)
+    {
+        Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+        choco install dotnet4.5 -y
+    }
 
-Install-Module -Name PowershellGet -Force
-Install-Module PSWindowsUpdate -Force -Scope AllUsers
+# Install and/or update powershell
+choco install powershell -y
+choco upgrade powershell -y
+
+# Latest NuGet provider
+If ((Get-PackageProvider | Select-Object Name) -match "NuGet")
+    {
+        Write-Host "NuGet installed, continuing..."   
+    }
+Else
+    {
+        Install-Module PackageManagement -Force
+        Install-PackageProvider Nuget -Force
+    }
+
+# PowershellGet
+If ((Get-InstalledModule | Select-Object Name) -match "PowershellGet")
+    {
+        Write-Host "PowershellGet installed, continuing..."
+    }
+else
+    {
+        Install-Module -Name PowershellGet -Force
+    }
+
+# PSWindowsUpdate
+If ((Get-Module | Select-Object Name) -match "PSWindowsUpdate")
+    {
+        Write-Host "PSWIndowsUpdate installed, continuing..."
+    }
+else 
+    {
+        Install-Module PSWindowsUpdate -Force -Scope AllUsers
+    }
+
+# Load PSWindowsUpdate
 Import-Module PSWindowsUpdate
 
 ### Add Windows Update Service Manager ID
