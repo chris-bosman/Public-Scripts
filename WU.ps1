@@ -6,6 +6,7 @@ If ((Get-PackageProvider | Select-Object Name) -match "NuGet")
     }
 Else
     {
+        Install-Module PackageManagement -Force
         Install-PackageProvider Nuget -Force
     }
 
