@@ -1,14 +1,4 @@
 ### Check for and install Get-WUInstall Prerequisites
-# Latest NuGet provider
-If ((Get-PackageProvider | Select-Object Name) -match "NuGet")
-    {
-        Write-Host "NuGet installed, continuing..."   
-    }
-Else
-    {
-        Install-Module PackageManagement -Force
-        Install-PackageProvider Nuget -Force
-    }
 
 # PowershellGet
 If ((Get-InstalledModule | Select-Object Name) -match "PowershellGet")
