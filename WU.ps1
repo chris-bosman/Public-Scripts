@@ -5,8 +5,8 @@ $env:ChocolateyInstall="$InstallDir"
 Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 # Check .NET version and install 4.5 if not present
-$RegCheck = Get-ChildItem "HKLM:SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\" | Get-ItemPropertyValue -Name Release | ForEach-Object { $_ -ge 394802 }
-If ($RegCheck -eq $false)
+$RegCheck = Get-ItemProperty -Path "HKLM:SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\" -Name Release
+If ($RegCheck -lt 378389 -or $RegCheck -eq $null)
     {
         choco install dotnet4.5 -y
     }
