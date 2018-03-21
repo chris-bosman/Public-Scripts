@@ -1,26 +1,7 @@
-### Check for and install Get-WUInstall Prerequisites
+# Check for and install Get-WUInstall Prerequisites
 
-# PowershellGet
-If ((Get-InstalledModule | Select-Object Name) -match "PowershellGet")
-    {
-        Write-Host "PowershellGet installed, continuing..."
-    }
-else
-    {
-        Install-Module -Name PowershellGet -Force
-    }
-
-# PSWindowsUpdate
-If ((Get-Module | Select-Object Name) -match "PSWindowsUpdate")
-    {
-        Write-Host "PSWIndowsUpdate installed, continuing..."
-    }
-else 
-    {
-        Install-Module PSWindowsUpdate -Force -Scope AllUsers
-    }
-
-# Load PSWindowsUpdate
+Install-Module -Name PowershellGet -Force
+Install-Module PSWindowsUpdate -Force -Scope AllUsers
 Import-Module PSWindowsUpdate
 
 ### Add Windows Update Service Manager ID
