@@ -4,23 +4,16 @@ $InstallDir="C:\ProgramData\chocoportable"
 $env:ChocolateyInstall="$InstallDir"
 Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-# Check .NET version and install 4.5 if not present
-$RegCheck = Get-ItemProperty -Path "HKLM:SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\" -Name Release
-If ($RegCheck.Release -lt 378389 -or $RegCheck.Release -eq $null)
-    {
-        choco install dotnet4.5 -y
-    }
+# Install 7zip
+choco install 7zip
 
-# Install and/or update powershell
-choco install powershell -y
-choco upgrade powershell -y
+# Download PSWindowsUpdate
+(New-Object Net.WebClient).DownloadFile("https://gallery.technet.microsoft.com/scriptcenter/2d191bcd-3308-4edd-9de2-88dff796b0bc/file/41459/47/PSWindowsUpdate.zip")
 
-# Use Powershell 5.1
-Powershell -Version 5.1
+# Unzip PSWindows Update
+7z x PSWindowsUpdate.zip -oC:\Windows\System32\WindowsPowerShell\v1.0\Modules\
 
 # Load PSWindowsUpdate
-Install-Module -Name PowershellGet -Force
-Install-Module PSWindowsUpdate -Force -Scope AllUsers
 Import-Module PSWindowsUpdate
 
 ### Add Windows Update Service Manager ID
