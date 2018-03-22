@@ -15,6 +15,9 @@ If ($RegCheck.Release -lt 378389 -or $RegCheck.Release -eq $null)
 choco install powershell -y
 choco upgrade powershell -y
 
+# Use Powershell 5.1
+Powershell -Version 5.1
+
 # Load PSWindowsUpdate
 Install-Module -Name PowershellGet -Force
 Install-Module PSWindowsUpdate -Force -Scope AllUsers
