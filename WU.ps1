@@ -5,7 +5,7 @@ $env:ChocolateyInstall="$InstallDir"
 Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
 # Install 7zip
-choco install 7zip
+choco install 7zip -y
 
 # Download PSWindowsUpdate
 (New-Object Net.WebClient).DownloadFile("https://gallery.technet.microsoft.com/scriptcenter/2d191bcd-3308-4edd-9de2-88dff796b0bc/file/41459/47/PSWindowsUpdate.zip")
