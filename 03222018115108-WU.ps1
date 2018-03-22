@@ -6,7 +6,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 
 # Check .NET version and install 4.5 if not present
 $RegCheck = Get-ItemProperty -Path "HKLM:SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\" -Name Release
-If ($RegCheck -lt 378389 -or $RegCheck -eq $null)
+If ($RegCheck.Release -lt 378389 -or $RegCheck.Release -eq $null)
     {
         choco install dotnet4.5 -y
     }
