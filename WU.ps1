@@ -1,26 +1,18 @@
 ### Check for and install Get-WUInstall Prerequisites
-# Install chocolatey
-$InstallDir="C:\ProgramData\chocoportable"
-$env:ChocolateyInstall="$InstallDir"
-Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+# Download PSWindowsUpdate
+$Destination = "C:\Windows\System32\WindowsPowerShell\v1.0\Modules"
+Invoke-WebRequest -Uri "https://gallery.technet.microsoft.com/scriptcenter/2d191bcd-3308-4edd-9de2-88dff796b0bc/file/41459/47/PSWindowsUpdate.zip" -Destination "$Destination\PSWindowsUpdate.zip"
 
-# Check .NET version and install 4.5 if not present
-$RegCheck = Get-ItemProperty -Path "HKLM:SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\" -Name Release
-If ($RegCheck.Release -lt 378389 -or $RegCheck.Release -eq $null)
+# Unzip Module
+$File = "$Destination\PSWindowsUpdate.zip"
+$Shell = New-Object -ComObject Shell.Application
+$Zip = $Shell.NameSpace($File)
+ForEach ($Item in $Zip.Items())
     {
-        choco install dotnet4.5 -y
+        $Shell.Namespace($Destination).CopyHere($Item)
     }
 
-# Install and/or update powershell
-choco install powershell -y
-choco upgrade powershell -y
-
-# Use Powershell 5.1
-Powershell -Version 5.1
-
-# Load PSWindowsUpdate
-Install-Module -Name PowershellGet -Force
-Install-Module PSWindowsUpdate -Force -Scope AllUsers
+# Import Module
 Import-Module PSWindowsUpdate
 
 ### Add Windows Update Service Manager ID
