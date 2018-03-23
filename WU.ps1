@@ -26,4 +26,4 @@ else
     }
 
 ### Install Updates But Supress Reboot
-Get-WUInstall -MicrosoftUpdate -AcceptAll -AutoReboot -Install -Confirm:$false
+Get-WUInstall -MicrosoftUpdate -AcceptAll -AutoReboot -Confirm:$false
