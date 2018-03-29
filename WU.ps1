@@ -25,7 +25,7 @@ else
     }
 
 # Install Updates
-Get-WUInstall -MicrosoftUpdate -AcceptAll -AutoReboot -Confirm:$false
+Get-WUInstall -MicrosoftUpdate -AcceptAll -IgnoreReboot -Confirm:$false
 
 # Reboot
 cmd /c shutdown /r /t 0
